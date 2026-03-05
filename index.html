@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>和你并肩的大合唱</title>
+    <meta name="description" content="把想对你说的话，藏进今晚的五个彩蛋里。" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="和你并肩的大合唱" />
+    <meta property="og:description" content="把想对你说的话，藏进今晚的五个彩蛋里。" />
+    <meta property="og:image" content="./assets/og-cover.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+    <div id="start-screen" class="screen start-screen visible">
+      <div class="start-card reveal">
+        <p class="kicker">MAYDAY FAN PAGE</p>
+        <h1 id="page-title">给你的一场霓虹演唱会</h1>
+        <p id="page-subtitle">每个彩蛋，都是一句想悄悄唱给你的话。</p>
+        <button id="start-btn" class="btn primary" type="button">开始</button>
+      </div>
+    </div>
+
+    <main id="main-stage" class="screen stage-screen" aria-live="polite">
+      <header class="topbar">
+        <button id="audio-toggle" class="btn ghost" type="button" aria-pressed="false">音乐：关</button>
+        <div class="progress-wrap">
+          <span>彩蛋进度</span>
+          <div class="progress">
+            <i id="progress-bar"></i>
+          </div>
+        </div>
+      </header>
+
+      <section id="stage" class="stage-area" aria-label="互动舞台">
+        <button id="heart-trigger" class="heart-trigger" type="button" aria-label="触发主彩蛋">
+          <span>❤</span>
+        </button>
+        <p class="hint">点击心跳 · 长按舞台 · 输入关键词 · 点四角 · 上滑</p>
+
+        <button class="corner-trigger" data-corner="tl" aria-label="左上彩蛋"></button>
+        <button class="corner-trigger" data-corner="tr" aria-label="右上彩蛋"></button>
+        <button class="corner-trigger" data-corner="bl" aria-label="左下彩蛋"></button>
+        <button class="corner-trigger" data-corner="br" aria-label="右下彩蛋"></button>
+      </section>
+    </main>
+
+    <section id="egg-modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+      <article class="modal-card">
+        <p id="egg-trigger-tag" class="tag"></p>
+        <h2 id="egg-title">彩蛋</h2>
+        <p id="egg-text" class="egg-text"></p>
+        <p id="egg-note" class="egg-note"></p>
+        <div class="modal-actions">
+          <button id="next-egg-btn" class="btn primary" type="button">下一条</button>
+          <button id="fav-egg-btn" class="btn ghost" type="button">收藏这句</button>
+          <button id="close-modal-btn" class="btn ghost" type="button">关闭</button>
+        </div>
+      </article>
+    </section>
+
+    <section id="finale" class="finale" aria-hidden="true">
+      <article class="finale-card">
+        <p class="kicker">FINAL ENCORE</p>
+        <h2>告白终章</h2>
+        <p id="final-message"></p>
+        <p id="final-signature" class="signature"></p>
+        <p id="final-date" class="date"></p>
+      </article>
+    </section>
+
+    <script src="./content.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

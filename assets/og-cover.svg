@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Neon fan page cover">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#070712"/>
+      <stop offset="55%" stop-color="#1b2654"/>
+      <stop offset="100%" stop-color="#6b1e66"/>
+    </linearGradient>
+    <filter id="blur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="28"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="160" cy="120" r="120" fill="#79f4ff" opacity="0.25" filter="url(#blur)"/>
+  <circle cx="990" cy="530" r="160" fill="#ff5cc7" opacity="0.24" filter="url(#blur)"/>
+  <text x="80" y="250" fill="#f6f9ff" font-size="74" font-family="Trebuchet MS, Arial" font-weight="700">和你并肩的大合唱</text>
+  <text x="80" y="330" fill="#d6e6ff" font-size="38" font-family="Trebuchet MS, Arial">把想对你说的话，藏进今晚的五个彩蛋里</text>
+</svg>

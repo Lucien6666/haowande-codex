@@ -1,0 +1,385 @@
+:root {
+  --bg-0: #070712;
+  --bg-1: #141a3b;
+  --bg-2: #8c1f74;
+  --neon-cyan: #79f4ff;
+  --neon-pink: #ff5cc7;
+  --text: #f5f8ff;
+  --glass: rgba(12, 17, 36, 0.64);
+  --line: rgba(165, 192, 255, 0.3);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  font-family: "Trebuchet MS", "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: var(--text);
+  background: radial-gradient(circle at 20% 10%, #2b3679 0%, transparent 36%),
+    radial-gradient(circle at 78% 20%, #842a87 0%, transparent 40%),
+    linear-gradient(145deg, var(--bg-0), var(--bg-1) 48%, #1f1734 100%);
+  overflow: hidden;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  width: 44vw;
+  height: 44vw;
+  border-radius: 50%;
+  filter: blur(52px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::before {
+  top: -16vw;
+  left: -8vw;
+  background: rgba(121, 244, 255, 0.19);
+}
+
+body::after {
+  right: -12vw;
+  bottom: -12vw;
+  background: rgba(255, 92, 199, 0.25);
+}
+
+#particle-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.screen {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+}
+
+.start-screen {
+  display: none;
+  place-items: center;
+  padding: 24px;
+}
+
+.start-screen.visible {
+  display: grid;
+}
+
+.start-card,
+.modal-card,
+.finale-card {
+  width: min(92vw, 640px);
+  border: 1px solid var(--line);
+  background: var(--glass);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  border-radius: 22px;
+  backdrop-filter: blur(8px);
+}
+
+.start-card {
+  padding: 30px 24px;
+  text-align: center;
+}
+
+.kicker {
+  margin: 0 0 12px;
+  letter-spacing: 0.18em;
+  font-size: 12px;
+  color: var(--neon-cyan);
+}
+
+h1,
+h2 {
+  margin: 0;
+  text-wrap: balance;
+}
+
+#page-title {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1.1;
+  text-shadow: 0 0 22px rgba(121, 244, 255, 0.36);
+}
+
+#page-subtitle {
+  margin: 16px auto 26px;
+  max-width: 34ch;
+  font-size: clamp(1rem, 2.4vw, 1.15rem);
+  color: #d4e0ff;
+}
+
+.reveal {
+  animation: fadeIn 1s ease both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+.stage-screen {
+  display: none;
+}
+
+.stage-screen.active {
+  display: block;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 14px 4px;
+}
+
+.progress-wrap {
+  display: grid;
+  gap: 4px;
+  font-size: 12px;
+}
+
+.progress {
+  width: min(200px, 45vw);
+  height: 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+  transition: width 0.35s ease;
+}
+
+.stage-area {
+  position: absolute;
+  inset: 70px 12px 12px;
+  border: 1px solid rgba(121, 244, 255, 0.25);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(20, 25, 45, 0.74), rgba(16, 14, 38, 0.72));
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  touch-action: none;
+}
+
+.stage-area::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.02) 0,
+    rgba(255, 255, 255, 0.02) 2px,
+    transparent 2px,
+    transparent 11px
+  );
+  pointer-events: none;
+}
+
+.heart-trigger {
+  width: min(30vw, 180px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: radial-gradient(circle at 35% 30%, #ffa8e2 0%, #ff4fbb 42%, #8a2260 100%);
+  color: #fff;
+  font-size: clamp(2rem, 6vw, 3rem);
+  cursor: pointer;
+  box-shadow: 0 0 34px rgba(255, 92, 199, 0.5);
+  animation: pulse 2.4s infinite;
+  z-index: 1;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.07);
+  }
+}
+
+.hint {
+  position: absolute;
+  bottom: 20px;
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  opacity: 0.82;
+}
+
+.corner-trigger {
+  position: absolute;
+  width: 58px;
+  height: 58px;
+  border: 0;
+  background: transparent;
+  opacity: 0;
+}
+
+.corner-trigger[data-corner="tl"] {
+  top: 0;
+  left: 0;
+}
+
+.corner-trigger[data-corner="tr"] {
+  top: 0;
+  right: 0;
+}
+
+.corner-trigger[data-corner="bl"] {
+  bottom: 0;
+  left: 0;
+}
+
+.corner-trigger[data-corner="br"] {
+  bottom: 0;
+  right: 0;
+}
+
+.modal,
+.finale {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  display: none;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.54);
+  padding: 16px;
+}
+
+.modal.show,
+.finale.show {
+  display: grid;
+}
+
+.modal-card {
+  padding: 20px;
+  max-height: min(84vh, 620px);
+  overflow: auto;
+}
+
+.tag {
+  margin: 0;
+  color: var(--neon-cyan);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.egg-text {
+  font-size: clamp(1.08rem, 2.5vw, 1.26rem);
+  line-height: 1.7;
+  color: #f9e8ff;
+  white-space: pre-wrap;
+}
+
+.egg-note {
+  color: #bfd2ff;
+  line-height: 1.6;
+}
+
+.modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.btn {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  min-height: 40px;
+  padding: 10px 16px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+}
+
+.btn.primary {
+  background: linear-gradient(90deg, #17d2f0, #ff4fbf);
+  border: 0;
+  color: #100f20;
+  font-weight: 700;
+}
+
+.btn.ghost {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.finale-card {
+  padding: 30px 24px;
+  text-align: center;
+  animation: fadeIn 0.7s ease both;
+}
+
+#final-message {
+  white-space: pre-wrap;
+  line-height: 1.8;
+  color: #f3e2ff;
+  margin: 14px 0 18px;
+}
+
+.signature,
+.date {
+  margin: 2px 0;
+  color: #cce4ff;
+}
+
+.ripple {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border-radius: 50%;
+  background: rgba(121, 244, 255, 0.72);
+  animation: ripple 0.65s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(22);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .hint {
+    width: 100%;
+    text-align: center;
+    padding: 0 16px;
+    font-size: 12px;
+  }
+
+  .topbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .progress {
+    width: 100%;
+  }
+
+  .progress-wrap {
+    width: 100%;
+  }
+}
