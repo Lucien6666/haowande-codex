@@ -156,6 +156,8 @@
     }
 
     audio = new Audio(bgmUrl);
+    audio.setAttribute("playsinline", "true");
+    audio.setAttribute("webkit-playsinline", "true");
     audio.loop = true;
     audio.volume = 0.5;
     audio.preload = "auto";
@@ -637,6 +639,13 @@
     }
     if (els.keywordOpenBtn) {
       els.keywordOpenBtn.addEventListener("click", handleKeywordOpen);
+      els.keywordOpenBtn.addEventListener(
+        "touchstart",
+        function (evt) {
+          evt.stopPropagation();
+        },
+        { passive: true }
+      );
       els.keywordOpenBtn.addEventListener("touchend", handleKeywordOpen, { passive: false });
     }
 
@@ -646,6 +655,20 @@
         primeAudio();
       },
       { once: true }
+    );
+    document.addEventListener(
+      "touchstart",
+      function () {
+        primeAudio();
+      },
+      { once: true, passive: true }
+    );
+    document.addEventListener(
+      "WeixinJSBridgeReady",
+      function () {
+        primeAudio();
+      },
+      false
     );
 
     if (els.heart) {
