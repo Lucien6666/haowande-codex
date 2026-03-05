@@ -178,7 +178,7 @@ h2 {
   overflow: hidden;
   display: grid;
   place-items: center;
-  touch-action: none;
+  touch-action: manipulation;
 }
 
 .stage-area::before {
@@ -212,7 +212,7 @@ h2 {
 .keyword-btn {
   position: absolute;
   bottom: 58px;
-  z-index: 1;
+  z-index: 3;
   border-color: rgba(121, 244, 255, 0.52);
   background: rgba(25, 44, 74, 0.48);
   box-shadow: 0 0 20px rgba(121, 244, 255, 0.26);
@@ -239,6 +239,7 @@ h2 {
   font-size: 13px;
   letter-spacing: 0.06em;
   opacity: 0.82;
+  pointer-events: none;
 }
 
 .corner-trigger {
