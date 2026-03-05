@@ -39,6 +39,9 @@
         <button id="heart-trigger" class="heart-trigger" type="button" aria-label="触发主彩蛋">
           <span>❤</span>
         </button>
+        <button id="keyword-open-btn" class="btn keyword-btn" type="button" aria-label="输入暗号触发彩蛋">
+          输入暗号
+        </button>
         <p class="hint">点击心跳 · 长按舞台 · 输入关键词 · 点四角 · 上滑</p>
 
         <button class="corner-trigger" data-corner="tl" aria-label="左上彩蛋"></button>
@@ -52,12 +55,34 @@
       <article class="modal-card">
         <p id="egg-trigger-tag" class="tag"></p>
         <h2 id="egg-title">彩蛋</h2>
+        <p id="egg-song" class="egg-song"></p>
         <p id="egg-text" class="egg-text"></p>
         <p id="egg-note" class="egg-note"></p>
         <div class="modal-actions">
           <button id="next-egg-btn" class="btn primary" type="button">下一条</button>
           <button id="fav-egg-btn" class="btn ghost" type="button">收藏这句</button>
           <button id="close-modal-btn" class="btn ghost" type="button">关闭</button>
+        </div>
+      </article>
+    </section>
+
+    <section id="keyword-modal" class="modal keyword-modal" role="dialog" aria-modal="true" aria-hidden="true">
+      <article class="modal-card keyword-card">
+        <p class="tag">KEYWORD</p>
+        <h2 id="keyword-modal-title">输入暗号</h2>
+        <p class="keyword-tip">输入你们的暗号，解锁隐藏歌词彩蛋。</p>
+        <input
+          id="keyword-input"
+          class="keyword-input"
+          type="text"
+          autocomplete="off"
+          placeholder="输入暗号"
+          maxlength="32"
+        />
+        <p id="keyword-error" class="keyword-error" aria-live="polite"></p>
+        <div class="modal-actions">
+          <button id="keyword-submit-btn" class="btn primary" type="button">触发彩蛋</button>
+          <button id="keyword-cancel-btn" class="btn ghost" type="button">取消</button>
         </div>
       </article>
     </section>
