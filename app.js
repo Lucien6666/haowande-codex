@@ -145,7 +145,7 @@
 
     els.audioToggle.disabled = false;
     els.audioToggle.setAttribute("aria-pressed", String(state.audioEnabled));
-    els.audioToggle.textContent = state.audioEnabled ? "音乐：开" : "音乐：关";
+    els.audioToggle.textContent = state.audioEnabled ? "音乐：开" : "音乐：点我播放";
   }
 
   function initAudio() {
@@ -420,6 +420,18 @@
     }
   }
 
+  function shouldIgnoreStageGesture(target) {
+    if (!target || typeof target.closest !== "function") {
+      return false;
+    }
+    return Boolean(
+      target.closest(".btn") ||
+        target.closest("input") ||
+        target.closest("textarea") ||
+        target.closest(".keyword-input")
+    );
+  }
+
   function onHeartClick(evt) {
     createRipple(evt.clientX, evt.clientY);
     burstAt(evt.clientX, evt.clientY, 26);
@@ -427,6 +439,10 @@
   }
 
   function onLongPressStart(evt) {
+    if (shouldIgnoreStageGesture(evt.target)) {
+      return;
+    }
+
     if (state.longPressTimer) {
       clearTimeout(state.longPressTimer);
     }
@@ -476,6 +492,11 @@
   }
 
   function onTouchStart(evt) {
+    if (shouldIgnoreStageGesture(evt.target)) {
+      state.touchStartY = null;
+      return;
+    }
+
     if (!evt.touches || !evt.touches[0]) {
       return;
     }
@@ -483,6 +504,11 @@
   }
 
   function onTouchEnd(evt) {
+    if (shouldIgnoreStageGesture(evt.target)) {
+      state.touchStartY = null;
+      return;
+    }
+
     if (state.touchStartY == null || !evt.changedTouches || !evt.changedTouches[0]) {
       return;
     }
@@ -537,6 +563,14 @@
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
     requestAnimationFrame(tickParticles);
+  }
+
+  function handleKeywordOpen(evt) {
+    if (evt) {
+      evt.preventDefault();
+      evt.stopPropagation();
+    }
+    openKeywordModal();
   }
 
   function resizeCanvas() {
@@ -602,7 +636,8 @@
       els.audioToggle.addEventListener("click", toggleAudio);
     }
     if (els.keywordOpenBtn) {
-      els.keywordOpenBtn.addEventListener("click", openKeywordModal);
+      els.keywordOpenBtn.addEventListener("click", handleKeywordOpen);
+      els.keywordOpenBtn.addEventListener("touchend", handleKeywordOpen, { passive: false });
     }
 
     document.addEventListener(
