@@ -209,6 +209,19 @@ h2 {
   z-index: 1;
 }
 
+.keyword-btn {
+  position: absolute;
+  bottom: 58px;
+  z-index: 1;
+  border-color: rgba(121, 244, 255, 0.52);
+  background: rgba(25, 44, 74, 0.48);
+  box-shadow: 0 0 20px rgba(121, 244, 255, 0.26);
+}
+
+.keyword-btn:hover {
+  background: rgba(39, 74, 123, 0.58);
+}
+
 @keyframes pulse {
   0%,
   100% {
@@ -293,6 +306,13 @@ h2 {
   white-space: pre-wrap;
 }
 
+.egg-song {
+  margin: 8px 0 10px;
+  color: #8be9ff;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+}
+
 .egg-note {
   color: #bfd2ff;
   line-height: 1.6;
@@ -323,6 +343,43 @@ h2 {
 
 .btn.ghost {
   background: rgba(255, 255, 255, 0.08);
+}
+
+.btn:disabled {
+  opacity: 0.56;
+  cursor: not-allowed;
+}
+
+.keyword-card {
+  width: min(92vw, 520px);
+}
+
+.keyword-tip {
+  margin: 12px 0;
+  color: #d3e7ff;
+}
+
+.keyword-input {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(121, 244, 255, 0.4);
+  background: rgba(5, 9, 24, 0.65);
+  color: #f8fbff;
+  outline: none;
+}
+
+.keyword-input:focus {
+  border-color: rgba(255, 92, 199, 0.62);
+  box-shadow: 0 0 0 2px rgba(255, 92, 199, 0.2);
+}
+
+.keyword-error {
+  min-height: 22px;
+  margin: 8px 0 12px;
+  color: #ff9ecf;
+  font-size: 13px;
 }
 
 .finale-card {
@@ -381,5 +438,13 @@ h2 {
 
   .progress-wrap {
     width: 100%;
+  }
+
+  .keyword-btn {
+    bottom: 62px;
+  }
+
+  .stage-area {
+    padding-bottom: 78px;
   }
 }
