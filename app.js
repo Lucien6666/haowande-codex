@@ -16,6 +16,16 @@
     keywordModalOpen: false,
     finished: false
   };
+  var runtime = {
+    isWeChat: /micromessenger/i.test((window.navigator && window.navigator.userAgent) || ""),
+    isLite: false
+  };
+
+  try {
+    runtime.isLite = new URLSearchParams(window.location.search).get("lite") === "1";
+  } catch (err) {
+    runtime.isLite = false;
+  }
 
   var triggersOrder = ["click-heart", "longpress-stage", "type-keyword", "tap-corner", "swipe-up"];
   var triggerLabel = {
@@ -93,6 +103,9 @@
     }
     if (els.pageSubtitle) {
       els.pageSubtitle.textContent = safeText(config.subtitle, "每个彩蛋，都是一句想悄悄唱给你的话。");
+      if (runtime.isLite) {
+        els.pageSubtitle.textContent += "（轻量模式）";
+      }
     }
     if (els.finalMessage) {
       els.finalMessage.textContent = safeText(config.finalMessage, "愿你永远做自己喜欢的自己。\n\n这页写给你。");
@@ -119,6 +132,13 @@
 
   function syncAudioButton() {
     if (!els.audioToggle) {
+      return;
+    }
+
+    if (runtime.isLite) {
+      els.audioToggle.disabled = true;
+      els.audioToggle.setAttribute("aria-pressed", "false");
+      els.audioToggle.textContent = "音乐：轻量模式";
       return;
     }
 
@@ -149,6 +169,12 @@
   }
 
   function initAudio() {
+    if (runtime.isLite) {
+      audio = null;
+      syncAudioButton();
+      return;
+    }
+
     var bgmUrl = safeText(config.bgmUrl, "");
     if (!bgmUrl) {
       syncAudioButton();
@@ -160,7 +186,7 @@
     audio.setAttribute("webkit-playsinline", "true");
     audio.loop = true;
     audio.volume = 0.5;
-    audio.preload = "auto";
+    audio.preload = "none";
     state.audioLoadState = "loading";
 
     audio.addEventListener("canplay", function () {
@@ -413,7 +439,9 @@
   }
 
   function onStart() {
-    primeAudio();
+    if (!runtime.isLite) {
+      primeAudio();
+    }
     if (els.startScreen) {
       els.startScreen.classList.remove("visible");
     }
@@ -557,6 +585,10 @@
   }
 
   function setupCanvas() {
+    if (runtime.isLite) {
+      return;
+    }
+
     if (!els.canvas) {
       return;
     }
@@ -649,20 +681,22 @@
       els.keywordOpenBtn.addEventListener("touchend", handleKeywordOpen, { passive: false });
     }
 
-    document.addEventListener(
-      "pointerdown",
-      function () {
-        primeAudio();
-      },
-      { once: true }
-    );
-    document.addEventListener(
-      "touchstart",
-      function () {
-        primeAudio();
-      },
-      { once: true, passive: true }
-    );
+    if (!runtime.isWeChat) {
+      document.addEventListener(
+        "pointerdown",
+        function () {
+          primeAudio();
+        },
+        { once: true }
+      );
+      document.addEventListener(
+        "touchstart",
+        function () {
+          primeAudio();
+        },
+        { once: true, passive: true }
+      );
+    }
     document.addEventListener(
       "WeixinJSBridgeReady",
       function () {
